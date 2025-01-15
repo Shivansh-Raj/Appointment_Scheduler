@@ -101,13 +101,14 @@ class specifyTimeSlot(APIView):
             Prof = CustomUser.objects.get(id = prof_id)
             if not Prof.is_Professor:
                 raise ValueError("The provided user is not a professor.")
-            slots = Availability.objects.filter(prof=prof_id, isBooked=False)
+            slots = Availability.objects.filter(Professor_id=prof_id, isBooked=False)
             serializer = availabilitySerializer(slots, many = True)
             if slots:
                 return Response(serializer.data)
             return Response("The professor has no Free Slot at the moment!!")
-        except:
-            return Response({"error": "The provided user is not a professor."}, status=404)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # "The provided user is not a professor."
 
 
     def post(self, request):
@@ -133,6 +134,8 @@ class checkAppointments(APIView):
         user = request.user
         try:
             appointments = Appointment.objects.filter(student= user, status = 'Booked')
+            if (user.is_Professor):
+                appointments = Appointment.objects.filter(professor= user, status = 'Booked')
             if appointments.exists():
                 serializer = appointmentSerializer(appointments, many = True)
                 # if serializer.is_valid():

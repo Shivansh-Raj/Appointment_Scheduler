@@ -51,7 +51,7 @@ class appointmentSerializer(serializers.ModelSerializer):
     student = serializers.StringRelatedField()
     stuId = serializers.PrimaryKeyRelatedField(queryset = User.objects.filter(is_Student = True), source = 'student')
     professor = serializers.StringRelatedField()
-    profId = serializers.PrimaryKeyRelatedField(queryset = User.objects.filter(is_Student = True), source = 'professor')
+    profId = serializers.PrimaryKeyRelatedField(queryset = User.objects.filter(is_Professor = True), source = 'professor')
 
     class Meta:
         model = Appointment

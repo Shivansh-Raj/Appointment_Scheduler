@@ -13,7 +13,7 @@ urlpatterns = [
     path('api/schedule', scheduleAppointment.as_view(), name = 'schedule appointment'),
     path('api/schedule/cancel', scheduleAppointment.as_view(), name = 'schedule appointment'),
     path('api/specifySlot', specifyTimeSlot.as_view(), name = 'schedule appointment'),
-    path('api/checkFreeSlot/<int:prof_id>', specifyTimeSlot.as_view(), name = 'schedule appointment'),
+    path('api/checkFreeSlots/<int:prof_id>', specifyTimeSlot.as_view(), name = 'schedule appointment'),
     path('api/allAppointments', checkAppointments.as_view(), name = 'schedule appointment'),
     # path('api/', include('schedule.urls'))
 ]
